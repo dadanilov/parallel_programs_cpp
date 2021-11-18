@@ -1,6 +1,6 @@
 #include <iostream>
-#include "stdafx.h"
-#include "pthread.h"
+#include "libs/stdafx.h"
+#include "libs/pthread.h"
 #include <windows.h>
 
 #pragma comment(lib, "pthreadVCE2.lib")
