@@ -10,12 +10,17 @@
 
 using namespace std;
 
+pthread_mutex_t m;
+pthread_mutexattr_t attr;
+
 void* pthread(void* arg)
 {
+	pthread_mutex_lock(&m);
     int tpart = *(int*)arg;
 	for (int i = 0; i < 100; i++)
 		printf("%d", tpart);
-	return NULL;
+	pthread_mutex_unlock(&m);
+	return NULL;	
 }
 
 int _tmain(int argc, _TCHAR* argv[])
@@ -23,6 +28,10 @@ int _tmain(int argc, _TCHAR* argv[])
 	setlocale(LC_ALL, "Russian");
 	pthread_t t[THREADS];
 	int n[THREADS]; 
+	pthread_mutexattr_init(&attr);
+	pthread_mutexattr_settype(&attr,PTHREAD_MUTEX_RECURSIVE);
+	pthread_mutex_init(&m, &attr);
+	pthread_mutexattr_destroy(&attr);
 	for (int i = 0; i < THREADS; i++)
 	{
 		n[i] = i;
